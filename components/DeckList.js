@@ -4,15 +4,15 @@ import { getDecksInfo } from '../utils/helpers'
 import DeckSummary from './DeckSummary'
 
 export default class DeckList extends Component {
+  cardNav = () => {
+    console.log('cardNav')
+    Alert.alert(
+      'You need to...'
+   )
+  }
+
   render() {
     const decks = getDecksInfo()
-
-    cardNav = () => {
-      console.log('cardNav')
-      Alert.alert(
-        'You need to...'
-     )
-    }
 
     return (
       <View>
