@@ -1,17 +1,34 @@
 export function getDecksInfo (deck) {
   info = {
     HTML: {
-      questions: {
-        "What is HTML": 'Hypertext Markup Language',
-        "What is a marquee?": 'A marquee allows you to put a scrolling text in a web page'
-      }
+      title: 'HTML',
+      questions: [
+        {
+          question: 'What is HTML?',
+          answer: 'Hypertext Markup Language'
+        },
+        {
+          question: 'What is a marquee?',
+          answer: 'A marquee allows you to put a scrolling text in a web page'
+        },
+      ]
     },
     React: {
-      questions: {
-        "What is React?": 'A JavaScript library for building user interfaces',
-        "What is JSX??": 'JSX is a shorthand for JavaScript XML',
-        "How can you update the state of a component?": 'How can you update the state of a component?'
-      }
+      title: 'React',
+      questions: [
+        {
+          question: 'What is React?',
+          answer: 'A JavaScript library for building user interfaces'
+        },
+        {
+          question: 'What is JSX?',
+          answer: 'JSX is a shorthand for JavaScript XML'
+        },
+        {
+          question: 'How can you update the state of a component?',
+          answer: 'State of a component can be updated using this.setState()'
+        },
+      ]
     }
   }
 

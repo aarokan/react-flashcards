@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import AddDeck from './components/AddDeck';
+import DeckList from './components/DeckList';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <AddDeck />
+      {/* <AddDeck /> */}
+      <DeckList />
     </View>
   );
 }
