@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { Alert, View, Text, FlatList } from 'react-native'
 import { getDecksInfo } from '../utils/helpers'
 import DeckSummary from './DeckSummary'
 

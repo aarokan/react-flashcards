@@ -5,7 +5,7 @@ export default function DeckSummary ({ onPress, title, cardCount }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <Text>{title}</Text>
-      <Text>{cardCount}</Text>
+      <Text>{cardCount} Cards</Text>
     </TouchableOpacity>
   )
 }
