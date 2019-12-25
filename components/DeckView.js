@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { getDecksInfo } from '../utils/helpers'
 
-export default class DeckList extends Component {
+export default class DeckView extends Component {
   addCard = () => {
     // Add card
   }
