@@ -21,7 +21,7 @@ export default class AddDeck extends Component {
     }))
   }
 
-  CreateDeck = () => {
+  createDeck = () => {
     // Update Redux
 
     this.setState(() => ({ input: '' }))
@@ -38,13 +38,13 @@ export default class AddDeck extends Component {
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <Text>{JSON.stringify(input)}</Text>
         <Text>Add Deck</Text>
-        <Text>Enter the Title of Your New Deck</Text>
+        <Text>What is the Title of Your New Deck</Text>
         <TextInput 
           style={styles.inputStyle}
           value={input}
           onChangeText={this.handleTextChange}
         />
-        <CreateDeckBtn onPress={this.CreateDeck} />
+        <CreateDeckBtn onPress={this.createDeck} />
       </KeyboardAvoidingView>
     )
   }
