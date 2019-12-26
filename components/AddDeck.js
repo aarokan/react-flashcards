@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { 
   StyleSheet, 
+  View,
   KeyboardAvoidingView, 
   Text, 
   TextInput, 
   TouchableOpacity 
 } from 'react-native'
 import { purple, white } from '../utils/colors';
+import { saveDeckTitle } from '../utils/api'
+import { addNewDeck } from '../actions/index'
 
 function CreateDeckBtn ({ onPress }) {
   return (
@@ -32,13 +35,14 @@ export default class AddDeck extends Component {
   createDeck = () => {
     const entry = this.state
 
-    // Update Redux
+    // saveDeckTitle(entry)
+    // this.props.dispatch(addNewDeck(entry))
 
     this.setState(() => ({ input: '' }))
 
     // Navigate to Deck
 
-    // Save to "DB"
+    // this.props.navigation.navigate('DeckView', {eb ???})
   }
   
   render() {
@@ -49,11 +53,13 @@ export default class AddDeck extends Component {
         <Text>{JSON.stringify(input)}</Text>
         <Text style={styles.title}>Add Deck</Text>
         <Text style={styles.text}>What is the Title of Your New Deck</Text>
-        <TextInput 
-          style={styles.inputStyle}
-          value={input}
-          onChangeText={this.handleTextChange}
-        />
+        <View>
+          <TextInput 
+            style={styles.inputStyle}
+            value={input}
+            onChangeText={this.handleTextChange}
+          />
+        </View>
         <CreateDeckBtn onPress={this.createDeck} />
       </KeyboardAvoidingView>
     )
@@ -64,6 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center'
   },
   title: {
     fontSize:28,
@@ -71,6 +78,7 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     backgroundColor: '#ccc',
+    width: 250
   },
   submitBtn: {
     backgroundColor: purple,
