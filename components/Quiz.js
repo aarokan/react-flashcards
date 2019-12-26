@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { getDecksInfo } from '../utils/helpers'
+import { lightPurp, green, orange, red, white } from '../utils/colors';
 
 export default class Quiz extends Component {
   state = {
@@ -34,14 +35,14 @@ export default class Quiz extends Component {
         <View>
           <Text>{number} / {deck["questions"].length}</Text>
           {!this.state.showQuestion
-            ? <View>
-                <Text>{deck["questions"][questionNumber].question}</Text>
+            ? <View style={styles.card}>
+                <Text style={styles.title}>{deck["questions"][questionNumber].question}</Text>
                 <TouchableOpacity 
                   onPress={this.alterShowAnswer}>
-                    <Text>Show Answer</Text>
+                    <Text style={{color:white}}>Show Answer</Text>
                 </TouchableOpacity>
               </View>
-            : <View>
+            : <View style={styles.answerCard}>
                 <Text>{deck["questions"][questionNumber].answer}</Text>
                 <TouchableOpacity 
                   onPress={this.alterShowAnswer}>
@@ -51,13 +52,15 @@ export default class Quiz extends Component {
           }
         </View>
         <View>
-          <TouchableOpacity 
+          <TouchableOpacity
+            style={styles.correctBtn} 
             onPress={() => this.submitAnswer('correct')}>
-              <Text>Correct</Text>
+              <Text style={styles.submitBtnText}>Correct</Text>
           </TouchableOpacity>
           <TouchableOpacity 
+            style={styles.incorrectBtn} 
             onPress={() => this.submitAnswer('incorrect')}>
-              <Text>Incorrect</Text>
+              <Text style={styles.submitBtnText}>Incorrect</Text>
           </TouchableOpacity>
           <Text>correct: {this.state.correct}</Text>
           <Text>incorrect: {this.state.incorrect}</Text>
@@ -66,3 +69,56 @@ export default class Quiz extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  card: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 40,
+    marginBottom: 30,
+    backgroundColor: orange,
+    borderRadius: 7,
+  },
+  answerCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 40,
+    marginBottom: 30,
+    borderColor: orange,
+    borderWidth: 5,
+    borderRadius: 7,
+  },
+  title: {
+    fontSize:28,
+    marginBottom: 10,
+    color: white,
+  },
+  correctBtn: {
+    backgroundColor: green,
+    padding: 10,
+    borderRadius: 7,
+    height: 60,
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 30,
+  },
+  incorrectBtn: {
+    backgroundColor: red,
+    padding: 10,
+    borderRadius: 7,
+    height: 60,
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 30,
+  },
+  submitBtnText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
+  }
+});

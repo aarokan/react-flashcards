@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity,  } from 'react-native'
+import { 
+  StyleSheet, 
+  KeyboardAvoidingView, 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity  
+} from 'react-native'
+import { purple, white } from '../utils/colors';
 
 export default class AddCard extends Component {
   state = {
@@ -53,8 +61,9 @@ export default class AddCard extends Component {
             onChangeText={this.handleAnswerTextChange}
           />
           <TouchableOpacity 
+            style={styles.submitBtn}
             onPress={this.createCard}>
-              <Text>Create Card</Text>
+              <Text style={styles.submitBtnText}>Create Card</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -70,4 +79,18 @@ const styles = StyleSheet.create({
   inputStyle: {
     backgroundColor: '#ccc',
   },
+  submitBtn: {
+    backgroundColor: purple,
+    padding: 10,
+    borderRadius: 7,
+    height: 60,
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 30,
+  },
+  submitBtnText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
+  }
 });

@@ -12,8 +12,8 @@ export default function App() {
       {/* <AddDeck /> */}
       {/* <DeckList /> */}
       {/* <DeckView /> */}
-      {/* <Quiz /> */}
-      <AddCard />
+      <Quiz />
+      {/* <AddCard /> */}
     </View>
   );
 }
@@ -24,5 +24,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });

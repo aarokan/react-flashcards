@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, View, Text, FlatList } from 'react-native'
+import { StyleSheet, Alert, View, Text, FlatList } from 'react-native'
 import { getDecksInfo } from '../utils/helpers'
 import DeckSummary from './DeckSummary'
 
@@ -15,8 +15,8 @@ export default class DeckList extends Component {
     const decks = getDecksInfo()
 
     return (
-      <View>
-        <Text>Decks</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Decks</Text>
         <FlatList
           data={Object.values(decks)}
           renderItem={({ item }) => (
@@ -32,3 +32,15 @@ export default class DeckList extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  title: {
+    fontSize:28,
+    marginBottom: 20,
+  },
+});
