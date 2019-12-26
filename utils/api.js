@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native'
 
-const initialDecks = {
+export const DECKS_STORAGE_KEY = 'UdaciCards:decks'
+
+let data = {
   HTML: {
     title: 'HTML',
     questions: [
@@ -32,12 +34,46 @@ const initialDecks = {
     ]
   }
 }
+
+export function fetchDecks() {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
+      return results === null ? initialData() : JSON.parse(results)
+  });
+}
+
+
+export function addNewDeck(deck) {
+  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(deck));
+}
+
+export function addCard({card, deckName}) {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY, (err, result) => {
+      let decks = JSON.parse(result);
+
+      let newQuestions = JSON.parse(JSON.stringify(decks[deckName].questions));
+      newQuestions[newQuestions.length] = card;
+
+      const value = JSON.stringify({
+          [deckName]: {title: deckName, questions: newQuestions},
+      });
+
+      AsyncStorage.mergeItem(DECKS_STORAGE_KEY, value);
+  });
+}
+
+export function initialData() {
+  AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+  return data;
+}
+
+{ /* 
   
 export const getData = () => {
   return initialDecks
 }
 
-// const DECKS_STORAGE_KEY = 'UdaciCards:decks'
+*/ }
+
 
 // export function getDecks (deck) {
 //   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
@@ -61,6 +97,7 @@ export const getData = () => {
 // }
   
 
+{ /* 
 
 export function removeEntry (key) {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
@@ -71,6 +108,8 @@ export function removeEntry (key) {
       AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
     })
 } 
+
+*/ }
 
 { /* 
 import { AsyncStorage } from 'react-native'

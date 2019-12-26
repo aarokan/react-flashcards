@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
 import { StyleSheet, Alert, View, Text, FlatList } from 'react-native'
+import {connect} from 'react-redux';
 import { getDecksInfo } from '../utils/helpers'
+import { receiveDecks } from '../actions/index';
+import { fetchDecks } from '../utils/api'
 import DeckSummary from './DeckSummary'
 
-export default class DeckList extends Component {
-  cardNav = () => {
-    console.log('cardNav')
-    Alert.alert(
-      'You need to...'
-   )
-  }
+class DeckList extends Component {
+  componentDidMount() {
+    const {dispatch} = this.props;
+    fetchDecks().then(decks => dispatch(receiveDecks(decks)))
+        .then(() => 
+            this.setState(
+                () => ({ready: true})
+            )
+        );
+  } 
 
   render() {
     const decks = getDecksInfo()
@@ -21,7 +27,7 @@ export default class DeckList extends Component {
           data={Object.values(decks)}
           renderItem={({ item }) => (
             <DeckSummary
-              onPress={this.cardNav}
+              onPress={() => this.props.navigation.navigate('DeckView', item)}
               title={item.title}
               cardCount={item["questions"].length}
             />
@@ -31,6 +37,12 @@ export default class DeckList extends Component {
       </View>
     )
   }
+}
+
+function mapStateToProps(state) {
+  return {
+      decks: state,
+  };
 }
 
 const styles = StyleSheet.create({
@@ -44,3 +56,5 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
+
+export default connect(mapStateToProps)(DeckList)
