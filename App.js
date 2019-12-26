@@ -12,14 +12,22 @@ import DeckView from './components/DeckView'
 import Quiz from './components/Quiz'
 import AddCard from './components/AddCard'
 import { purple, white, orange } from './utils/colors';
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
 
 const Tabs = createBottomTabNavigator({
-  Decks: {
+  DeckList: {
     screen: DeckList,
+    navigationOptions: {
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards' size={30} color={tintColor} />
+    },
   },
-  Add: {
-    screen: AddDeck
+  AddDeck: {
+    screen: AddDeck,
+    navigationOptions: {
+      tabBarLabel: 'Add Deck',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus' size={30} color={tintColor} />
+    },
   },
 },
 {
@@ -66,8 +74,6 @@ const AppNavigator = createStackNavigator({
       },
     },
   },
-
-
   AddCard: {
     screen: AddCard,
     navigationOptions: {
@@ -103,30 +109,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-{ /*
-  const Tabs = TabNavigator({
-    DeckList: {
-      screen: DeckList,
-      navigationOptions: {
-        tabBarlabel: 'Add Deck',
-        tabBarIcon: 'cards'
-      }
-    },
-    AddDeck: {
-      screen: AddDeck,
-      navigationOptions: {
-        tabBarlabel: 'Add Deck',
-        tabBarIcon: 'plus-square'
-      }
-    }
-  }, {
-    tabBarOptions: {
-      activeTintColor: purple,
-      style: {
-        height: 50,
-        backgroundColor: white
-      }
-    }
-  })
-  */ }
