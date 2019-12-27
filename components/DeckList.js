@@ -18,7 +18,6 @@ class DeckList extends Component {
   } 
 
   render() {
-    // const decks = getDecksInfo()
     const decks = this.props.decks
 
     return (
