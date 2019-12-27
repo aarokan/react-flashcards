@@ -5,22 +5,6 @@ import { getDecksInfo } from '../utils/helpers'
 import { lightPurp, purple, white } from '../utils/colors';
 
 class DeckView extends Component {
-  addCard = () => {
-    // Add card
-    this.props.navigation.navigate('AddCard', {
-      title,
-      questions,
-    })
-  }
-
-  startQuiz = () => {
-    // Start Quiz
-    this.props.navigation.navigate('Quiz', {
-      title,
-      questions,
-  })
-  }
-
   render() {
     const {title} = this.props.navigation.state.params;
     const questions = this.props.decks[title] && this.props.decks[title].questions;

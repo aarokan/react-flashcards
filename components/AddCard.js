@@ -4,15 +4,20 @@ import {
   KeyboardAvoidingView, 
   View, 
   Text, 
-  TextInput, 
+  TextInput,
+  Alert, 
   TouchableOpacity  
 } from 'react-native'
+import {addNewCard} from '../actions';
+import {connect} from 'react-redux';
+import {addCard} from '../utils/api';
 import { purple, white } from '../utils/colors';
 
-export default class AddCard extends Component {
+class AddCard extends Component {
   state = {
     questionInput: '',
-    answerInput: ''
+    answerInput: '',
+    errorMessage: false
   }
 
   handleQuestionTextChange = (questionInput) => {
@@ -28,24 +33,48 @@ export default class AddCard extends Component {
   }
 
   createCard = () => {
-    // Update Redux
+    const {questionInput, answerInput} = this.state;
+    const {title, questions} = this.props.navigation.state.params;
+    const params = {title, questions, questionInput, answerInput};
 
-    this.setState(() => ({ 
-        questionInput: '',
-        answerInput: ''
-    }))
+    if ((questionInput.length < 1 || answerInput.length < 1)) {
+      Alert.alert(
+        'Error!',
+        'Card must have a Question and an Answer !'
+      );
+      return
+    } else if (questionInput && answerInput) {
+        this.setState({
+          errorMessage: false,
+          questionInput: ''
+        });
+        Alert.alert('Awsome !', 'New Card Created !',
+        [
+          {
+            text: 'OK', onPress: () =>
+            this.props.navigation.goBack()
+          }
+        ],)
+    }
+    else {
+      this.setState({ errorMessage: true })
+    }
 
-    // Navigate to Deck
+    this.props.dispatch(addNewCard(params));
 
-    // Save to "DB"
-  }
+    addCard({
+      card: {questionInput, answerInput},
+      deckName: title
+    });
+  };
+
   
   render() {
     const { questionInput, answerInput } = this.state
 
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
-        <View>
+        <View style={styles.container}>
           <Text>{JSON.stringify(questionInput)}</Text>
           <Text>Enter the Question</Text>
           <TextInput 
@@ -75,9 +104,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center'
   },
   inputStyle: {
     backgroundColor: '#ccc',
+    width: 250,
   },
   submitBtn: {
     backgroundColor: purple,
@@ -94,3 +125,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
+
+function mapStateToProps(state) {
+  return {
+      decks: state,
+  };
+}
+
+export default connect(mapStateToProps)(AddCard);
