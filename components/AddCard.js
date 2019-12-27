@@ -8,45 +8,45 @@ import {
   Alert, 
   TouchableOpacity  
 } from 'react-native'
-import {addNewCard} from '../actions';
+import {addNewCard} from '../actions/index';
 import {connect} from 'react-redux';
 import {addCard} from '../utils/api';
 import { purple, white } from '../utils/colors';
 
 class AddCard extends Component {
   state = {
-    questionInput: '',
-    answerInput: '',
+    question: '',
+    answer: '',
     errorMessage: false
   }
 
-  handleQuestionTextChange = (questionInput) => {
+  handleQuestionTextChange = (question) => {
     this.setState(() => ({
-      questionInput
+      question
     }))
   }
 
-  handleAnswerTextChange = (answerInput) => {
+  handleAnswerTextChange = (answer) => {
     this.setState(() => ({
-      answerInput
+      answer
     }))
   }
 
   createCard = () => {
-    const {questionInput, answerInput} = this.state;
+    const {question, answer} = this.state;
     const {title, questions} = this.props.navigation.state.params;
-    const params = {title, questions, questionInput, answerInput};
+    const params = {title, questions, question, answer};
 
-    if ((questionInput.length < 1 || answerInput.length < 1)) {
+    if ((question.length < 1 || answer.length < 1)) {
       Alert.alert(
         'Error!',
         'Card must have a Question and an Answer !'
       );
       return
-    } else if (questionInput && answerInput) {
+    } else if (question && answer) {
         this.setState({
           errorMessage: false,
-          questionInput: ''
+          question: ''
         });
         Alert.alert('Awsome !', 'New Card Created !',
         [
@@ -63,30 +63,30 @@ class AddCard extends Component {
     this.props.dispatch(addNewCard(params));
 
     addCard({
-      card: {questionInput, answerInput},
+      card: {question, answer},
       deckName: title
     });
   };
 
   
   render() {
-    const { questionInput, answerInput } = this.state
+    const { question, answer } = this.state
 
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <View style={styles.container}>
-          <Text>{JSON.stringify(questionInput)}</Text>
+          <Text>{JSON.stringify(question)}</Text>
           <Text>Enter the Question</Text>
           <TextInput 
             style={styles.inputStyle}
-            value={questionInput}
+            value={question}
             onChangeText={this.handleQuestionTextChange}
           />
-          <Text>{JSON.stringify(answerInput)}</Text>
+          <Text>{JSON.stringify(answer)}</Text>
           <Text>Enter the Answer</Text>
           <TextInput 
             style={styles.inputStyle}
-            value={answerInput}
+            value={answer}
             onChangeText={this.handleAnswerTextChange}
           />
           <TouchableOpacity 
