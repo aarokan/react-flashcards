@@ -4,11 +4,13 @@ import {
   View,
   KeyboardAvoidingView, 
   Text, 
-  TextInput, 
+  TextInput,
+  Alert, 
   TouchableOpacity 
 } from 'react-native'
+import {connect} from 'react-redux';
 import { purple, white } from '../utils/colors';
-import { saveDeckTitle } from '../utils/api'
+import { addDeck } from '../utils/api'
 import { addNewDeck } from '../actions/index'
 
 function CreateDeckBtn ({ onPress }) {
@@ -21,11 +23,14 @@ function CreateDeckBtn ({ onPress }) {
   )
 }
 
-export default class AddDeck extends Component {
-  state = {
-    input: ''
+class AddDeck extends Component {
+  componentWillMount() {
+    this.setState({
+      input: '',
+      errorMessage: false,
+    })
   }
-
+  
   handleTextChange = (input) => {
     this.setState(() => ({
       input
@@ -33,17 +38,42 @@ export default class AddDeck extends Component {
   }
 
   createDeck = () => {
-    const entry = this.state
+    const entry = this.state;
+    const {decks} = this.props;
 
-    // saveDeckTitle(entry)
-    // this.props.dispatch(addNewDeck(entry))
+    if (entry.input.length < 1) {
+      Alert.alert(
+        'Error!',
+        'Deck must have a Title !'
+      );
+    } else if (!entry.input) {this.setState({errorMessage: true})}
+    else {
+      if (decks[entry.input]) {
+        Alert.alert(
+          'Error!',
+          'This Deck already Exists !'
+        );
+      } else {
+        const newDeck = {[entry.input]: {title: entry.input, questions: []}};
 
-    this.setState(() => ({ input: '' }))
+        this.props.dispatch(addNewDeck(newDeck));
+        addDeck(newDeck);
 
-    // Navigate to Deck
+        Alert.alert(
+          'Great!', 'Deck Added',
+          [
+            {text: 'OK', onPress: () => this.props.navigation.navigate('DeckView', {
+              title: entry.input,
+              questions : []
+            })},
+          ],
+        );
 
-    // this.props.navigation.navigate('DeckView', {eb ???})
-  }
+        this.setState({input: ''});
+      }
+    }
+  };
+
   
   render() {
     const { input } = this.state
@@ -95,3 +125,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   }
 });
+
+function mapStateToProps(state) {
+  return {
+      decks: state,
+  };
+}
+
+export default connect(mapStateToProps)(AddDeck);

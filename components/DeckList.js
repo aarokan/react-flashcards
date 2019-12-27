@@ -18,7 +18,8 @@ class DeckList extends Component {
   } 
 
   render() {
-    const decks = getDecksInfo()
+    // const decks = getDecksInfo()
+    const decks = this.props.decks
 
     return (
       <View style={styles.container}>
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize:28,
+    marginTop: 30,
     marginBottom: 20,
   },
 });

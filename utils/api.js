@@ -41,8 +41,7 @@ export function fetchDecks() {
   });
 }
 
-
-export function addNewDeck(deck) {
+export function addDeck(deck) {
   return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(deck));
 }
 
