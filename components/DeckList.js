@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Alert, View, Text, FlatList } from 'react-native'
+import { StyleSheet, Animated, View, Text, FlatList } from 'react-native'
 import {connect} from 'react-redux';
 import { getDecksInfo } from '../utils/helpers'
 import { receiveDecks } from '../actions/index';
@@ -7,18 +7,33 @@ import { fetchDecks } from '../utils/api'
 import DeckSummary from './DeckSummary'
 
 class DeckList extends Component {
+
+  state = {
+    bounceValue: new Animated.Value(1)
+  }
+
   componentDidMount() {
     const {dispatch} = this.props;
     fetchDecks().then(decks => dispatch(receiveDecks(decks)))
-        .then(() => 
-            this.setState(
-                () => ({ready: true})
-            )
-        );
-  } 
+      .then(() => 
+          this.setState(
+              () => ({ready: true})
+          )
+      );
+  }
+  
+  navToDeck = (item) => {
+    const { bounceValue } = this.state
+      
+      Animated.sequence([
+        Animated.timing(bounceValue, {duration: 50, toValue: 1.04}),
+        Animated.spring(bounceValue, {toValue: 1, friction: 4})  
+      ]).start(() => { this.props.navigation.navigate('DeckView', item)})
+  }
 
   render() {
     const decks = this.props.decks
+    const { bounceValue } = this.state
 
     return (
       <View style={styles.container}>
@@ -27,7 +42,7 @@ class DeckList extends Component {
           data={Object.values(decks)}
           renderItem={({ item }) => (
             <DeckSummary
-              onPress={() => this.props.navigation.navigate('DeckView', item)}
+              onPress={() => this.navToDeck(item)}
               title={item.title}
               cardCount={item["questions"].length}
             />
