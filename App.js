@@ -13,6 +13,7 @@ import Quiz from './components/Quiz'
 import AddCard from './components/AddCard'
 import { purple, white, orange } from './utils/colors';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
+import { setLocalNotification } from './utils/helpers'
 
 const Tabs = createBottomTabNavigator({
   DeckList: {
@@ -99,6 +100,11 @@ const AppNavigator = createStackNavigator({
 const TabsContainer = createAppContainer(AppNavigator)
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>
