@@ -80,7 +80,6 @@ class AddDeck extends Component {
 
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
-        <Text>{JSON.stringify(input)}</Text>
         <Text style={styles.title}>Add Deck</Text>
         <Text style={styles.text}>What is the Title of Your New Deck</Text>
         <View>

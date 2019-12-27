@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { getDecksInfo } from '../utils/helpers'
 import { purple, green, orange, red, white } from '../utils/colors';
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 export default class Quiz extends Component {
   state = {
@@ -20,6 +20,8 @@ export default class Quiz extends Component {
       showQuestion: false,
       correct: 0, 
     });
+    clearLocalNotification()
+      .then(setLocalNotification)
   };
 
   alterShowAnswer = () => {

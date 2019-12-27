@@ -75,14 +75,12 @@ class AddCard extends Component {
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <View style={styles.container}>
-          <Text>{JSON.stringify(question)}</Text>
           <Text>Enter the Question</Text>
           <TextInput 
             style={styles.inputStyle}
             value={question}
             onChangeText={this.handleQuestionTextChange}
           />
-          <Text>{JSON.stringify(answer)}</Text>
           <Text>Enter the Answer</Text>
           <TextInput 
             style={styles.inputStyle}
@@ -109,6 +107,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     backgroundColor: '#ccc',
     width: 250,
+    marginBottom: 10,
   },
   submitBtn: {
     backgroundColor: purple,
